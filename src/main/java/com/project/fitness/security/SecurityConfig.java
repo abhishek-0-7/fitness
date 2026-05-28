@@ -16,24 +16,52 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .cors(cors -> {})
                 .csrf(AbstractHttpConfigurer::disable)
+
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/swagger-ui.html",
-                                        "/swagger-ui/**",
-                                        "/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated());
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                                // Public Frontend Pages
+                                .requestMatchers(
+                                        "/",
+                                        "/index.html",
+                                        "/login.html",
+                                        "/register.html",
+                                        "/dashboard.html",
+                                        "/css/**",
+                                        "/js/**"
+                                ).permitAll()
+
+                                // Auth APIs
+                                .requestMatchers("/api/auth/**").permitAll()
+
+                                // Swagger
+                                .requestMatchers(
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**"
+                                ).permitAll()
+
+                                // Admin APIs
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                                // All Other APIs Require Login
+                                .anyRequest().authenticated()
+                );
+
+        // JWT Filter
+        http.addFilterBefore(
+                jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+        );
+
         return http.build();
     }
 
