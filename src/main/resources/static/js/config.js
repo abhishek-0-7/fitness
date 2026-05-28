@@ -1,1 +1,1 @@
-const BASE_URL = "https://fitness-0bsx.onrender.com";
+const BASE_URL = "https://fitness-06sx.onrender.com";
