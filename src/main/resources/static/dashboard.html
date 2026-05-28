@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+    <h2>Fitness Dashboard</h2>
+    <button onclick="logout()">Logout</button>
+</nav>
+
+<div class="dashboard-container">
+
+    <div class="card">
+        <h3>Track Activity</h3>
+
+        <form id="activityForm">
+
+            <select id="activityType">
+                <option value="RUNNING">RUNNING</option>
+                <option value="WALKING">WALKING</option>
+                <option value="CYCLING">CYCLING</option>
+                <option value="SWIMMING">SWIMMING</option>
+                <option value="YOGA">YOGA</option>
+                <option value="HIIT">HIIT</option>
+            </select>
+            <input type="number" id="duration" placeholder="Duration in Minutes" required>
+
+            <input type="number" id="calories" placeholder="Calories Burned" required>
+
+            <button type="submit">Save Activity</button>
+        </form>
+
+        <p id="activityMessage"></p>
+    </div>
+
+    <div class="card">
+        <h3>Your Activities</h3>
+
+        <div id="activitiesContainer"></div>
+    </div>
+
+</div>
+
+<script src="./js/config.js"></script>
+<script src="./js/utils.js"></script>
+<script src="./js/dashboard.js"></script>
+
+</body>
+</html>
