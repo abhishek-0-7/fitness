@@ -1,5 +1,13 @@
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jdk
+
 WORKDIR /app
-COPY target/*.jar app.jar
+
+COPY . .
+
+RUN chmod +x mvnw
+
+RUN ./mvnw clean package -DskipTests
+
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+ENTRYPOINT ["java", "-jar", "target/fitness-monolith-0.0.1-SNAPSHOT.jar"]
