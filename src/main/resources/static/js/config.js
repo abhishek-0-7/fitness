@@ -1,1 +1,1 @@
-const BASE_URL = "http://localhost:2004";
+const BASE_URL = "https://fitness-0bsx.onrender.com";
